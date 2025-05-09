@@ -2,6 +2,7 @@ import useFlowsManagerStore from "@/stores/flowsManagerStore";
 import { useEffect, useState } from "react";
 import { cn } from "../../../utils/utils";
 import IconComponent from "../../common/genericIconComponent";
+import { useTranslation } from "react-i18next";
 
 export default function CardsWrapComponent({
   onFileDrop,
@@ -14,6 +15,8 @@ export default function CardsWrapComponent({
 }) {
   const [isDragging, setIsDragging] = useState(false);
   const isIOModalOpen = useFlowsManagerStore((state) => state.IOModalOpen);
+  const { t } = useTranslation();
+
   useEffect(() => {
     // Function to handle visibility change
     const handleVisibilityChange = () => {
@@ -81,7 +84,7 @@ export default function CardsWrapComponent({
       {isDragging ? (
         <>
           <IconComponent name="ArrowUpToLine" className="h-12 w-12 stroke-1" />
-          {dragMessage ? dragMessage : "Drop your file here"}
+          {dragMessage ? dragMessage : t('cards_wrap.drop_file_here')}
         </>
       ) : (
         children

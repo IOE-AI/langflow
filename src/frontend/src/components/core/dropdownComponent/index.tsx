@@ -36,6 +36,7 @@ import {
   PopoverTrigger,
 } from "../../ui/popover";
 import { BaseInputProps } from "../parameterRenderComponent/types";
+import { useTranslation } from "react-i18next";
 
 export default function Dropdown({
   disabled,
@@ -87,9 +88,10 @@ export default function Dropdown({
   }, [value, options, filteredOptions]);
 
   // Initialize utilities and constants
+  const { t } = useTranslation();
   const placeholderName = name
     ? formatPlaceholderName(name)
-    : "Choose an option...";
+    : t('dropdown.choose_option');
   const { firstWord } = formatName(name);
   const fuse = new Fuse(validOptions, { keys: ["name", "value"] });
   const PopoverContentDropdown =
@@ -276,7 +278,7 @@ export default function Dropdown({
       variant="primary"
       size="xs"
     >
-      <LoadingTextComponent text="Loading options" />
+      <LoadingTextComponent text={t('dropdown.loading_options')} />
     </Button>
   );
 
@@ -363,7 +365,7 @@ export default function Dropdown({
       <input
         onChange={searchRoleByTerm}
         onKeyDown={handleInputKeyDown}
-        placeholder="Search options..."
+        placeholder={t('dropdown.search_options')}
         className="flex h-9 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
         autoComplete="off"
         data-testid="dropdown_search_input"
@@ -386,7 +388,7 @@ export default function Dropdown({
               name="Plus"
               className="h-3 w-3 text-primary"
             />
-            {`New ${firstWord}`}
+            {`${t('dropdown.new')} ${firstWord}`}
           </div>
         </Button>
       </CommandItem>
@@ -403,7 +405,7 @@ export default function Dropdown({
               name="RefreshCcw"
               className={cn("refresh-icon h-3 w-3 text-primary")}
             />
-            Refresh list
+            {t('dropdown.refresh_list')}
           </div>
         </Button>
       </CommandItem>
@@ -520,7 +522,7 @@ export default function Dropdown({
           ))
         ) : (
           <CommandItem disabled className="text-center text-sm">
-            No options found
+            {t('dropdown.no_options_found')}
           </CommandItem>
         )}
       </CommandGroup>
@@ -549,7 +551,7 @@ export default function Dropdown({
   if (Object.keys(validOptions).length === 0 && !combobox && isLoading) {
     return (
       <div>
-        <span className="text-sm italic">Loading...</span>
+        <span className="text-sm italic">{t('dropdown.loading')}</span>
       </div>
     );
   }

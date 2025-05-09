@@ -12,6 +12,7 @@ import { EXPORT_CODE_DIALOG } from "../../constants/constants";
 import { useTweaksStore } from "../../stores/tweaksStore";
 import { FlowType } from "../../types/flow/index";
 import BaseModal from "../baseModal";
+import { useTranslation } from "react-i18next";
 
 export default function ApiModal({
   flow,
@@ -24,6 +25,7 @@ export default function ApiModal({
   open?: boolean;
   setOpen?: (a: boolean | ((o?: boolean) => boolean)) => void;
 }) {
+  const { t } = useTranslation();
   const autoLogin = useAuthStore((state) => state.autoLogin);
   const [open, setOpen] =
     mySetOpen !== undefined && myOpen !== undefined
@@ -45,8 +47,8 @@ export default function ApiModal({
   return (
     <BaseModal open={open} setOpen={setOpen} size="x-large">
       <BaseModal.Trigger asChild>{children}</BaseModal.Trigger>
-      <BaseModal.Header description={EXPORT_CODE_DIALOG}>
-        <span className="pr-2">API</span>
+      <BaseModal.Header description={t('export_code_dialog')}>
+        <span className="pr-2">{t('api')}</span>
         <IconComponent
           name="Code2"
           className="h-6 w-6 pl-1 text-gray-800 dark:text-white"

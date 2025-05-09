@@ -6,6 +6,7 @@ import remarkGfm from "remark-gfm";
 import ForwardedIconComponent from "../../common/genericIconComponent";
 import SimplifiedCodeTabComponent from "../codeTabsComponent/ChatCodeTabComponent";
 import DurationDisplay from "./DurationDisplay";
+import { useTranslation } from "react-i18next";
 
 export default function ContentDisplay({
   content,
@@ -16,6 +17,8 @@ export default function ContentDisplay({
   chatId: string;
   playgroundPage?: boolean;
 }) {
+  const { t } = useTranslation();
+
   // First render the common BaseContent elements if they exist
   const renderHeader = content.header && (
     <>
@@ -132,8 +135,8 @@ export default function ContentDisplay({
     case "error":
       contentData = (
         <div className="text-red-500">
-          {content.reason && <div>Reason: {content.reason}</div>}
-          {content.solution && <div>Solution: {content.solution}</div>}
+          {content.reason && <div>{t('chat.reason')} {content.reason}</div>}
+          {content.solution && <div>{t('chat.solution')} {content.solution}</div>}
           {content.traceback && (
             <SimplifiedCodeTabComponent
               language="text"

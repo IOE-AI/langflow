@@ -12,6 +12,7 @@ import {
   inputHandlerEventType,
 } from "../../types/components";
 import BaseModal from "../baseModal";
+import { useTranslation } from "react-i18next";
 
 export default function UserManagementModal({
   title,
@@ -25,6 +26,7 @@ export default function UserManagementModal({
   onConfirm,
   asChild,
 }: UserManagementType) {
+  const { t } = useTranslation();
   const [pwdVisible, setPwdVisible] = useState(false);
   const [confirmPwdVisible, setConfirmPwdVisible] = useState(false);
   const [open, setOpen] = useState(false);
@@ -100,8 +102,7 @@ export default function UserManagementModal({
                 }}
               >
                 <Form.Label className="data-[invalid]:label-invalid">
-                  Username{" "}
-                  <span className="font-medium text-destructive">*</span>
+                  {t('username')} <span className="font-medium text-destructive">*</span>
                 </Form.Label>
               </div>
               <Form.Control asChild>
@@ -113,11 +114,11 @@ export default function UserManagementModal({
                   value={username}
                   className="primary-input"
                   required
-                  placeholder="Username"
+                  placeholder={t('username_placeholder')}
                 />
               </Form.Control>
               <Form.Message match="valueMissing" className="field-invalid">
-                Please enter your username
+                {t('username_required')}
               </Form.Message>
             </Form.Field>
 
@@ -135,10 +136,7 @@ export default function UserManagementModal({
                     }}
                   >
                     <Form.Label className="data-[invalid]:label-invalid flex">
-                      Password{" "}
-                      <span className="ml-1 mr-1 font-medium text-destructive">
-                        *
-                      </span>
+                      {t('password')} <span className="ml-1 mr-1 font-medium text-destructive">*</span>
                       {pwdVisible && (
                         <Eye
                           onClick={() => setPwdVisible(!pwdVisible)}
@@ -169,12 +167,12 @@ export default function UserManagementModal({
                   </Form.Control>
 
                   <Form.Message className="field-invalid" match="valueMissing">
-                    Please enter a password
+                    {t('password_required')}
                   </Form.Message>
 
                   {password != confirmPassword && (
                     <Form.Message className="field-invalid">
-                      Passwords do not match
+                      {t('password_not_match')}
                     </Form.Message>
                   )}
                 </Form.Field>
@@ -193,10 +191,7 @@ export default function UserManagementModal({
                     }}
                   >
                     <Form.Label className="data-[invalid]:label-invalid flex">
-                      Confirm password{" "}
-                      <span className="ml-1 mr-1 font-medium text-destructive">
-                        *
-                      </span>
+                      {t('confirm_password')} <span className="ml-1 mr-1 font-medium text-destructive">*</span>
                       {confirmPwdVisible && (
                         <Eye
                           onClick={() =>
@@ -229,7 +224,7 @@ export default function UserManagementModal({
                     />
                   </Form.Control>
                   <Form.Message className="field-invalid" match="valueMissing">
-                    Please confirm your password
+                    {t('confirm_password_required')}
                   </Form.Message>
                 </Form.Field>
               </div>

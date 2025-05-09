@@ -3,6 +3,7 @@ import ShadTooltip from "@/components/common/shadTooltipComponent";
 import { Button } from "@/components/ui/button";
 import { TableOptionsTypeAPI } from "@/types/api";
 import { cn } from "@/utils/utils";
+import { useTranslation } from "react-i18next";
 
 export default function TableOptions({
   resetGrid,
@@ -23,12 +24,14 @@ export default function TableOptions({
   tableOptions?: TableOptionsTypeAPI;
   paginationInfo?: string;
 }): JSX.Element {
+  const { t } = useTranslation();
+
   return (
     <div className={cn("absolute bottom-3 left-6")}>
       <div className="flex items-center gap-3">
         {addRow && !tableOptions?.block_add && (
           <div>
-            <ShadTooltip content={"Add a new row"}>
+            <ShadTooltip content={t('table.add_new_row')}>
               <Button data-testid="add-row-button" unstyled onClick={addRow}>
                 <IconComponent
                   name="Plus"
@@ -43,9 +46,9 @@ export default function TableOptions({
             <ShadTooltip
               content={
                 !hasSelection ? (
-                  <span>Select items to duplicate</span>
+                  <span>{t('table.select_items_to_duplicate')}</span>
                 ) : (
-                  <span>Duplicate selected items</span>
+                  <span>{t('table.duplicate_selected_items')}</span>
                 )
               }
             >
@@ -73,9 +76,9 @@ export default function TableOptions({
             <ShadTooltip
               content={
                 !hasSelection ? (
-                  <span>Select items to delete</span>
+                  <span>{t('table.select_items_to_delete')}</span>
                 ) : (
-                  <span>Delete selected items</span>
+                  <span>{t('table.delete_selected_items')}</span>
                 )
               }
             >

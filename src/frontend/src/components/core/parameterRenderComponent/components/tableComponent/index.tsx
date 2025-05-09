@@ -18,6 +18,7 @@ import cloneDeep from "lodash";
 import { ElementRef, forwardRef, useRef, useState } from "react";
 import TableOptions from "./components/TableOptions";
 import resetGrid from "./utils/reset-grid-columns";
+import { useTranslation } from "react-i18next";
 
 export interface TableComponentProps extends AgGridReactProps {
   columnDefs: NonNullable<ColDef<any, any>[]>;
@@ -54,6 +55,7 @@ const TableComponent = forwardRef<
     },
     ref,
   ) => {
+    const { t } = useTranslation();
     let colDef = props.columnDefs
       .filter((col) => !col.hide)
       .map((col, index, filteredArray) => {
@@ -197,8 +199,8 @@ const TableComponent = forwardRef<
               name="AlertCircle"
               className="h-5 w-5 text-primary"
             />
-            <AlertTitle>{alertTitle}</AlertTitle>
-            <AlertDescription>{alertDescription}</AlertDescription>
+            <AlertTitle>{t(alertTitle)}</AlertTitle>
+            <AlertDescription>{t(alertDescription)}</AlertDescription>
           </Alert>
         </div>
       );

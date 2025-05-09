@@ -5,6 +5,7 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import IconComponent from "../../components/common/genericIconComponent";
 import { NoticeAlertType } from "../../types/alerts";
+import { useTranslation } from "react-i18next";
 
 export default function NoticeAlert({
   title,
@@ -14,6 +15,7 @@ export default function NoticeAlert({
   removeAlert,
 }: NoticeAlertType): JSX.Element {
   const [show, setShow] = useState(true);
+  const { t } = useTranslation();
   useEffect(() => {
     if (show) {
       setTimeout(() => {
@@ -64,7 +66,7 @@ export default function NoticeAlert({
                   to={link}
                   className="whitespace-nowrap font-medium text-info-foreground hover:text-accent-foreground"
                 >
-                  Details
+                  {t('alert.details')}
                 </CustomLink>
               )}
             </p>

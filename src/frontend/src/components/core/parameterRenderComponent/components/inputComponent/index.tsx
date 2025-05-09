@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import { getIconName } from "./components/helpers/get-icon-name";
 import CustomInputPopover from "./components/popover";
 import CustomInputPopoverObject from "./components/popoverObject";
+import { useTranslation } from "react-i18next";
 
 export default function InputComponent({
   autoFocus = false,
@@ -20,7 +21,7 @@ export default function InputComponent({
   isForm = false,
   password,
   editNode = false,
-  placeholder = "Type something...",
+  placeholder = undefined,
   className,
   id = "",
   blurOnEnter = false,
@@ -30,7 +31,7 @@ export default function InputComponent({
   selectedOptions = [],
   setSelectedOptions,
   options = [],
-  optionsPlaceholder = "Search options...",
+  optionsPlaceholder = undefined,
   optionsButton,
   optionButton,
   objectOptions,
@@ -44,9 +45,13 @@ export default function InputComponent({
   blockAddNewGlobalVariable = false,
   hasRefreshButton = false,
 }: InputComponentType): JSX.Element {
+  const { t } = useTranslation();
   const [pwdVisible, setPwdVisible] = useState(false);
   const refInput = useRef<HTMLInputElement>(null);
   const [showOptions, setShowOptions] = useState<boolean>(false);
+
+  const finalPlaceholder = placeholder ?? t('dropdown.choose_option');
+  const finalOptionsPlaceholder = optionsPlaceholder ?? t('dropdown.search_options');
 
   useEffect(() => {
     if (disabled && value && onChange && value !== "") {
@@ -81,7 +86,7 @@ export default function InputComponent({
               password && !editNode ? "pr-10" : "",
               className!,
             )}
-            placeholder={password && editNode ? "Key" : placeholder}
+            placeholder={password && editNode ? "Key" : finalPlaceholder}
             onChange={(e) => {
               if (onChangeFolderName) {
                 return onChangeFolderName(e);
@@ -121,9 +126,9 @@ export default function InputComponent({
               disabled={disabled}
               setShowOptions={setShowOptions}
               required={required}
-              placeholder={placeholder}
+              placeholder={finalPlaceholder}
               blurOnEnter={blurOnEnter}
-              optionsPlaceholder={optionsPlaceholder}
+              optionsPlaceholder={finalOptionsPlaceholder}
               className={className}
             />
           ) : (
@@ -148,10 +153,10 @@ export default function InputComponent({
               password={password}
               pwdVisible={pwdVisible}
               editNode={editNode}
-              placeholder={placeholder}
+              placeholder={finalPlaceholder}
               blurOnEnter={blurOnEnter}
               options={options}
-              optionsPlaceholder={optionsPlaceholder}
+              optionsPlaceholder={finalOptionsPlaceholder}
               nodeStyle={nodeStyle}
               popoverWidth={popoverWidth}
               commandWidth={commandWidth}

@@ -9,8 +9,10 @@ import { useStoreStore } from "@/stores/storeStore";
 import { Outlet } from "react-router-dom";
 import ForwardedIconComponent from "../../components/common/genericIconComponent";
 import PageLayout from "../../components/common/pageLayout";
+import { useTranslation } from 'react-i18next';
 
 export default function SettingsPage(): JSX.Element {
+  const { t } = useTranslation();
   const autoLogin = useAuthStore((state) => state.autoLogin);
   const hasStore = useStoreStore((state) => state.hasStore);
 
@@ -25,7 +27,7 @@ export default function SettingsPage(): JSX.Element {
 
   if (showGeneralSettings) {
     sidebarNavItems.push({
-      title: "General",
+      title: t('general'),
       href: "/settings/general",
       icon: (
         <ForwardedIconComponent
@@ -38,7 +40,7 @@ export default function SettingsPage(): JSX.Element {
 
   sidebarNavItems.push(
     {
-      title: "Global Variables",
+      title: t('global_variables'),
       href: "/settings/global-variables",
       icon: (
         <ForwardedIconComponent
@@ -49,7 +51,7 @@ export default function SettingsPage(): JSX.Element {
     },
 
     {
-      title: "Shortcuts",
+      title: t('shortcuts'),
       href: "/settings/shortcuts",
       icon: (
         <ForwardedIconComponent
@@ -59,7 +61,7 @@ export default function SettingsPage(): JSX.Element {
       ),
     },
     {
-      title: "Messages",
+      title: t('messages'),
       href: "/settings/messages",
       icon: (
         <ForwardedIconComponent
@@ -73,7 +75,7 @@ export default function SettingsPage(): JSX.Element {
   if (!ENABLE_DATASTAX_LANGFLOW) {
     const langflowItems = [
       {
-        title: "Langflow API Keys",
+        title: t('langflow_api_keys'),
         href: "/settings/api-keys",
         icon: (
           <ForwardedIconComponent
@@ -83,7 +85,7 @@ export default function SettingsPage(): JSX.Element {
         ),
       },
       {
-        title: "Langflow Store",
+        title: t('langflow_store'),
         href: "/settings/store",
         icon: (
           <ForwardedIconComponent
@@ -100,8 +102,8 @@ export default function SettingsPage(): JSX.Element {
   return (
     <PageLayout
       backTo={"/"}
-      title="Settings"
-      description="Manage the general settings for Langflow."
+      title={t('settings')}
+      description={t('settings_desc')}
     >
       <SidebarProvider width="15rem" defaultOpen={false}>
         <SideBarButtonsComponent items={sidebarNavItems} />

@@ -43,8 +43,10 @@ import { useStoreStore } from "../../stores/storeStore";
 import { storeComponent } from "../../types/store";
 import { cn } from "../../utils/utils";
 import InputSearchComponent from "../MainPage/components/inputSearchComponent";
+import { useTranslation } from 'react-i18next';
 
 export default function StorePage(): JSX.Element {
+  const { t } = useTranslation();
   const hasApiKey = useStoreStore((state) => state.hasApiKey);
   const validApiKey = useStoreStore((state) => state.validApiKey);
   const loadingApiKey = useStoreStore((state) => state.loadingApiKey);
@@ -181,7 +183,7 @@ export default function StorePage(): JSX.Element {
           }}
         >
           <IconComponent name="Key" className="mr-2 w-4" />
-          API Key
+          {t('api_key')}
         </Button>
       }
     >
@@ -216,7 +218,7 @@ export default function StorePage(): JSX.Element {
                   (loading ? " cursor-not-allowed" : "")
                 }
               >
-                All
+                {t('all')}
               </button>
               <button
                 data-testid="flows-button-store"
@@ -232,7 +234,7 @@ export default function StorePage(): JSX.Element {
                   (loading ? " cursor-not-allowed" : "")
                 }
               >
-                Flows
+                {t('flows')}
               </button>
               <button
                 data-testid="components-button-store"
@@ -248,11 +250,11 @@ export default function StorePage(): JSX.Element {
                   (loading ? " cursor-not-allowed" : "")
                 }
               >
-                Components
+                {t('components')}
               </button>
-              <ShadTooltip content="Coming Soon">
+              <ShadTooltip content={t('coming_soon')}>
                 <button className="cursor-not-allowed p-3 text-muted-foreground">
-                  Bundles
+                  {t('bundles')}
                 </button>
               </ShadTooltip>
             </div>
@@ -265,22 +267,22 @@ export default function StorePage(): JSX.Element {
               value={selectFilter}
             >
               <SelectTrigger className="mr-4 w-[160px] flex-shrink-0">
-                <SelectValue placeholder="Filter Values" />
+                <SelectValue placeholder={t('filter_values')} />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
-                  <SelectItem value="all">All</SelectItem>
+                  <SelectItem value="all">{t('all')}</SelectItem>
                   <SelectItem
                     disabled={!hasApiKey || !validApiKey}
                     value="createdbyme"
                   >
-                    Created By Me
+                    {t('created_by_me')}
                   </SelectItem>
                   <SelectItem
                     disabled={!hasApiKey || !validApiKey}
                     value="likedbyme"
                   >
-                    Liked By Me
+                    {t('liked_by_me')}
                   </SelectItem>
                 </SelectGroup>
               </SelectContent>
@@ -311,7 +313,7 @@ export default function StorePage(): JSX.Element {
             <span className="px-0.5 text-sm text-muted-foreground">
               {(!loading || searchData.length !== 0) && (
                 <>
-                  {totalRowsCount} {totalRowsCount !== 1 ? "results" : "result"}
+                  {totalRowsCount} {totalRowsCount !== 1 ? t('results') : t('result')}
                 </>
               )}
             </span>
@@ -323,12 +325,12 @@ export default function StorePage(): JSX.Element {
               }}
             >
               <SelectTrigger data-testid="select-order-store">
-                <SelectValue placeholder="Popular" />
+                <SelectValue placeholder={t('popular')} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="Popular">Popular</SelectItem>
+                <SelectItem value="Popular">{t('popular')}</SelectItem>
                 {/* <SelectItem value="Recent">Most Recent</SelectItem> */}
-                <SelectItem value="Alphabetical">Alphabetical</SelectItem>
+                <SelectItem value="Alphabetical">{t('alphabetical')}</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -363,15 +365,11 @@ export default function StorePage(): JSX.Element {
                   <div className="grid w-full gap-4">
                     {selectFilter != "all" ? (
                       <>
-                        You haven't{" "}
-                        {selectFilter === "createdbyme" ? "created" : "liked"}{" "}
-                        anything with the selected filters yet.
+                        {t('no_created_liked', { action: selectFilter === 'createdbyme' ? t('created_by_me').toLowerCase() : t('liked_by_me').toLowerCase() })}
                       </>
                     ) : (
                       <>
-                        There are no{" "}
-                        {tabActive == "Flows" ? "Flows" : "Components"} with the
-                        selected filters.
+                        {t('no_flows_components', { type: tabActive == 'Flows' ? t('flows').toLowerCase() : t('components').toLowerCase() })}
                       </>
                     )}
                   </div>

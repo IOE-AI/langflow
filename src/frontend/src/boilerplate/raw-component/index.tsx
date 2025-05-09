@@ -1,8 +1,11 @@
+import { useTranslation } from "react-i18next";
+
 type RawComponentProps = {};
 const RawComponent = ({}: RawComponentProps) => {
+  const { t } = useTranslation();
   return (
     <>
-      <div>RawComponent</div>
+      <div>{t('boilerplate.raw_component')}</div>
     </>
   );
 };

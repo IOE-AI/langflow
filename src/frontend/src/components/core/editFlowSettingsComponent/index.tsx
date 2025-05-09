@@ -4,6 +4,7 @@ import { cn, isEndpointNameValid } from "../../../utils/utils";
 import { Input } from "../../ui/input";
 import { Label } from "../../ui/label";
 import { Textarea } from "../../ui/textarea";
+import { useTranslation } from "react-i18next";
 
 export const EditFlowSettings: React.FC<InputProps> = ({
   name,
@@ -18,6 +19,7 @@ export const EditFlowSettings: React.FC<InputProps> = ({
   const [isMaxLength, setIsMaxLength] = useState(false);
   const [validEndpointName, setValidEndpointName] = useState(true);
   const [isInvalidName, setIsInvalidName] = useState(false);
+  const { t } = useTranslation();
 
   const handleNameChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -57,14 +59,12 @@ export const EditFlowSettings: React.FC<InputProps> = ({
     <>
       <Label>
         <div className="edit-flow-arrangement">
-          <span className="font-medium">Name{setName ? "" : ":"}</span>{" "}
+          <span className="font-medium">{t('edit_flow_settings.name')}{setName ? "" : ":"}</span>{" "}
           {isMaxLength && (
-            <span className="edit-flow-span">Character limit reached</span>
+            <span className="edit-flow-span">{t('edit_flow_settings.character_limit_reached')}</span>
           )}
           {isInvalidName && (
-            <span className="edit-flow-span">
-              Name invalid or already exists
-            </span>
+            <span className="edit-flow-span">{t('edit_flow_settings.name_invalid_or_exists')}</span>
           )}
         </div>
         {setName ? (
@@ -74,7 +74,7 @@ export const EditFlowSettings: React.FC<InputProps> = ({
             type="text"
             name="name"
             value={name ?? ""}
-            placeholder="Flow name"
+            placeholder={t('edit_flow_settings.flow_name')}
             id="name"
             maxLength={maxLength}
             onDoubleClickCapture={(event) => {
@@ -90,9 +90,7 @@ export const EditFlowSettings: React.FC<InputProps> = ({
       </Label>
       <Label>
         <div className="edit-flow-arrangement mt-3">
-          <span className="font-medium">
-            Description{setDescription ? " (optional)" : ":"}
-          </span>
+          <span className="font-medium">{t(setDescription ? 'edit_flow_settings.description_optional' : 'edit_flow_settings.description')}:</span>
         </div>
         {setDescription ? (
           <Textarea
@@ -100,7 +98,7 @@ export const EditFlowSettings: React.FC<InputProps> = ({
             id="description"
             onChange={handleDescriptionChange}
             value={description!}
-            placeholder="Flow description"
+            placeholder={t('edit_flow_settings.flow_description')}
             className="mt-2 max-h-[250px] resize-none font-normal"
             rows={5}
             onDoubleClickCapture={(event) => {
@@ -114,19 +112,16 @@ export const EditFlowSettings: React.FC<InputProps> = ({
               description === "" ? "font-light italic" : "",
             )}
           >
-            {description === "" ? "No description" : description}
+            {description === "" ? t('edit_flow_settings.no_description') : description}
           </div>
         )}
       </Label>
       {setEndpointName && (
         <Label>
           <div className="edit-flow-arrangement mt-3">
-            <span className="font-medium">Endpoint Name</span>
+            <span className="font-medium">{t('edit_flow_settings.endpoint_name')}</span>
             {!validEndpointName && (
-              <span className="edit-flow-span">
-                Invalid endpoint name. Use only letters, numbers, hyphens, and
-                underscores ({maxLength} characters max).
-              </span>
+              <span className="edit-flow-span">{t('edit_flow_settings.invalid_endpoint_name', { maxLength })}</span>
             )}
           </div>
           <Input
@@ -135,7 +130,7 @@ export const EditFlowSettings: React.FC<InputProps> = ({
             type="text"
             name="endpoint_name"
             value={endpointName ?? ""}
-            placeholder="An alternative name to run the endpoint"
+            placeholder={t('edit_flow_settings.endpoint_placeholder')}
             maxLength={maxLength}
             id="endpoint_name"
             onDoubleClickCapture={(event) => {

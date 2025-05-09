@@ -9,6 +9,7 @@ import IconComponent from "../../components/common/genericIconComponent";
 import { Button } from "../../components/ui/button";
 import BaseModal from "../baseModal";
 import TextEditorArea from "./components/textEditorArea";
+import { useTranslation } from "react-i18next";
 
 export default function TextModal({
   children,
@@ -21,6 +22,7 @@ export default function TextModal({
   setValue: (value: string) => void;
   editable?: boolean;
 }): JSX.Element {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const [internalValue, setInternalValue] = useState(value);
 
@@ -38,7 +40,7 @@ export default function TextModal({
     >
       <BaseModal.Trigger className="h-full">{children}</BaseModal.Trigger>
       <BaseModal.Header description={""}>
-        <span className="pr-2">View Text</span>
+        <span className="pr-2">{t('view_text')}</span>
         <IconComponent
           name="Type"
           className="h-6 w-6 pl-1 text-primary"
@@ -68,7 +70,7 @@ export default function TextModal({
                 setOpen(false);
               }}
             >
-              Save
+              {t('save')}
             </Button>
           )}
         </div>

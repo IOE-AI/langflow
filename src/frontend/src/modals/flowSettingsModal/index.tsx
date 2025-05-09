@@ -11,6 +11,7 @@ import { FlowSettingsPropsType } from "../../types/components";
 import { FlowType } from "../../types/flow";
 import { isEndpointNameValid } from "../../utils/utils";
 import BaseModal from "../baseModal";
+import { useTranslation } from "react-i18next";
 
 export default function FlowSettingsModal({
   open,
@@ -20,6 +21,7 @@ export default function FlowSettingsModal({
 }: FlowSettingsPropsType): JSX.Element {
   if (!open) return <></>;
 
+  const { t } = useTranslation();
   const saveFlow = useSaveFlow();
   const currentFlow = useFlowStore((state) =>
     flowData ? undefined : state.currentFlow,
@@ -52,7 +54,7 @@ export default function FlowSettingsModal({
         ?.then(() => {
           setOpen(false);
           setIsSaving(false);
-          setSuccessData({ title: "Changes saved successfully" });
+          setSuccessData({ title: t('changes_saved_successfully') });
         })
         .catch(() => {
           setIsSaving(false);
@@ -95,8 +97,8 @@ export default function FlowSettingsModal({
       size="smaller-h-full"
       onSubmit={handleClick}
     >
-      <BaseModal.Header description={SETTINGS_DIALOG_SUBTITLE}>
-        <span className="pr-2">Details</span>
+      <BaseModal.Header description={t('settings_dialog_subtitle')}>
+        <span className="pr-2">{t('details')}</span>
         <IconComponent name="SquarePen" className="mr-2 h-4 w-4" />
       </BaseModal.Header>
       <BaseModal.Content>
@@ -113,7 +115,7 @@ export default function FlowSettingsModal({
 
       <BaseModal.Footer
         submit={{
-          label: "Save",
+          label: t('save'),
           dataTestId: "save-flow-settings",
           disabled: disableSave,
           loading: isSaving,

@@ -4,12 +4,14 @@ import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import IconComponent from "../../../../components/common/genericIconComponent";
 import { SingleAlertComponentType } from "../../../../types/alerts";
+import { useTranslation } from "react-i18next";
 
 export default function SingleAlert({
   dropItem,
   removeAlert,
 }: SingleAlertComponentType): JSX.Element {
   const [show, setShow] = useState(true);
+  const { t } = useTranslation();
   const type = dropItem.type;
 
   return type === "error" ? (
@@ -75,7 +77,7 @@ export default function SingleAlert({
             }}
             className="inline-flex rounded-md p-1.5 text-status-red"
           >
-            <span className="sr-only">Dismiss</span>
+            <span className="sr-only">{t('alert.dismiss')}</span>
             <IconComponent name="X" className="h-4 w-4 text-error-foreground" />
           </button>
         </div>
@@ -99,7 +101,7 @@ export default function SingleAlert({
               to={dropItem.link}
               className="whitespace-nowrap font-medium text-info-foreground hover:text-accent-foreground"
             >
-              Details
+              {t('alert.details')}
             </CustomLink>
           ) : (
             <></>
@@ -118,7 +120,7 @@ export default function SingleAlert({
             }}
             className="inline-flex rounded-md p-1.5 text-info-foreground"
           >
-            <span className="sr-only">Dismiss</span>
+            <span className="sr-only">{t('alert.dismiss')}</span>
             <IconComponent name="X" className="h-4 w-4 text-info-foreground" />
           </button>
         </div>
@@ -152,7 +154,7 @@ export default function SingleAlert({
             }}
             className="inline-flex rounded-md p-1.5 text-status-green"
           >
-            <span className="sr-only">Dismiss</span>
+            <span className="sr-only">{t('alert.dismiss')}</span>
             <IconComponent
               name="X"
               className="h-4 w-4 text-success-foreground"

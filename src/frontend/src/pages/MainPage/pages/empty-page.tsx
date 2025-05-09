@@ -14,6 +14,7 @@ import { ExternalLink } from "lucide-react";
 import { FaDiscord, FaGithub } from "react-icons/fa";
 import { useShallow } from "zustand/react/shallow";
 import useFileDrop from "../hooks/use-on-file-drop";
+import { useTranslation } from 'react-i18next';
 
 const EMPTY_PAGE_TITLE = "Welcome to Langflow";
 const EMPTY_PAGE_DESCRIPTION = "Your new favorite way to ship Agents";
@@ -34,6 +35,7 @@ export const EmptyPageCommunity = ({
 }: {
   setOpenModal: (open: boolean) => void;
 }) => {
+  const { t } = useTranslation();
   const handleFileDrop = useFileDrop(undefined);
   const folders = useFolderStore((state) => state.folders);
   const userData = useAuthStore(useShallow((state) => state.userData));
@@ -61,7 +63,7 @@ export const EmptyPageCommunity = ({
   return (
     <DotBackgroundDemo>
       <CardsWrapComponent
-        dragMessage={`Drop your flows or components here`}
+        dragMessage={t('empty_page_drag_and_drop')}
         onFileDrop={handleFileDrop}
       >
         <div className="m-0 h-full w-full bg-background p-0">
@@ -87,7 +89,7 @@ export const EmptyPageCommunity = ({
                 data-testid="mainpage_title"
                 className="z-50 text-center font-chivo text-2xl font-medium text-foreground"
               >
-                {EMPTY_PAGE_TITLE}
+                {t('empty_page_title')}
               </span>
 
               <span
@@ -95,8 +97,8 @@ export const EmptyPageCommunity = ({
                 className="z-50 text-center text-base text-secondary-foreground"
               >
                 {folders?.length > 1
-                  ? EMPTY_PAGE_FOLDER_DESCRIPTION
-                  : EMPTY_PAGE_DESCRIPTION}
+                  ? t('empty_page_folder_desc')
+                  : t('empty_page_desc')}
               </span>
             </div>
 
@@ -115,7 +117,7 @@ export const EmptyPageCommunity = ({
                     <div className="flex gap-3">
                       <FaGithub className="h-6 w-6" />
                       <div>
-                        <span className="font-semibold">GitHub</span>
+                        <span className="font-semibold">{t('github')}</span>
                         <span className="ml-2 font-mono text-muted-foreground">
                           {formatNumber(stars)}
                         </span>
@@ -123,7 +125,7 @@ export const EmptyPageCommunity = ({
                     </div>
                     <div>
                       <span className="text-base text-secondary-foreground">
-                        {EMPTY_PAGE_GITHUB_DESCRIPTION}
+                        {t('empty_page_github_desc')}
                       </span>
                     </div>
                   </div>
@@ -145,7 +147,7 @@ export const EmptyPageCommunity = ({
                     <div className="flex gap-3">
                       <FaDiscord className="h-6 w-6 text-discord-color" />
                       <div>
-                        <span className="font-semibold">Discord</span>
+                        <span className="font-semibold">{t('discord')}</span>
                         <span className="ml-2 font-mono text-muted-foreground">
                           {formatNumber(discordCount)}
                         </span>
@@ -153,7 +155,7 @@ export const EmptyPageCommunity = ({
                     </div>
                     <div>
                       <span className="text-base text-secondary-foreground">
-                        {EMPTY_PAGE_DISCORD_DESCRIPTION}
+                        {t('empty_page_discord_desc')}
                       </span>
                     </div>
                   </div>
@@ -173,7 +175,7 @@ export const EmptyPageCommunity = ({
                   aria-hidden="true"
                   className="h-4 w-4"
                 />
-                <span>{EMPTY_PAGE_CREATE_FIRST_FLOW_BUTTON_TEXT}</span>
+                <span>{t('empty_page_create_first_flow')}</span>
               </Button>
             </div>
           </div>
@@ -182,7 +184,7 @@ export const EmptyPageCommunity = ({
           data-testid="empty_page_drag_and_drop_text"
           className="absolute bottom-5 left-0 right-0 mt-4 cursor-default text-center text-xxs text-muted-foreground"
         >
-          {EMPTY_PAGE_DRAG_AND_DROP_TEXT}
+          {t('empty_page_drag_and_drop')}
         </p>
       </CardsWrapComponent>
     </DotBackgroundDemo>

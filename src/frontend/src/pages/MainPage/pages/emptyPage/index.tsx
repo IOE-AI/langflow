@@ -4,18 +4,20 @@ import CardsWrapComponent from "@/components/core/cardsWrapComponent";
 import { Button } from "@/components/ui/button";
 import { useFolderStore } from "@/stores/foldersStore";
 import useFileDrop from "../../hooks/use-on-file-drop";
+import { useTranslation } from 'react-i18next';
 
 type EmptyPageProps = {
   setOpenModal: (open: boolean) => void;
 };
 
 export const EmptyPage = ({ setOpenModal }: EmptyPageProps) => {
+  const { t } = useTranslation();
   const folders = useFolderStore((state) => state.folders);
   const handleFileDrop = useFileDrop(undefined);
 
   return (
     <CardsWrapComponent
-      dragMessage={`Drop your flows or components here`}
+      dragMessage={t('drag_flows_or_components')}
       onFileDrop={handleFileDrop}
     >
       <div className="m-0 h-full w-full bg-secondary p-0">
@@ -26,13 +28,13 @@ export const EmptyPage = ({ setOpenModal }: EmptyPageProps) => {
               className="pt-5 font-chivo text-2xl font-semibold text-foreground"
               data-testid="mainpage_title"
             >
-              {folders?.length > 1 ? "Empty project" : "Start building"}
+              {folders?.length > 1 ? t('empty_project') : t('start_building')}
             </h3>
             <p
               data-testid="empty-project-description"
               className="pb-5 text-sm text-secondary-foreground"
             >
-              Begin with a template, or start from scratch.
+              {t('begin_with_template')}
             </p>
             <Button
               variant="default"
@@ -46,7 +48,7 @@ export const EmptyPage = ({ setOpenModal }: EmptyPageProps) => {
                 className="h-4 w-4"
               />
               <span className="hidden whitespace-nowrap font-semibold md:inline">
-                New Flow
+                {t('new_flow')}
               </span>
             </Button>
           </div>

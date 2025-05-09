@@ -23,6 +23,7 @@ import {
 } from "../HeaderMenu";
 import { ProfileIcon } from "../ProfileIcon";
 import ThemeButtons from "../ThemeButtons";
+import { useTranslation } from "react-i18next";
 
 export const AccountMenu = () => {
   const { customParam: id } = useParams();
@@ -30,6 +31,7 @@ export const AccountMenu = () => {
   const latestVersion = useDarkStore((state) => state.latestVersion);
   const navigate = useCustomNavigate();
   const { mutate: mutationLogout } = useLogout();
+  const { t } = useTranslation();
 
   const { isAdmin, autoLogin } = useAuthStore((state) => ({
     isAdmin: state.isAdmin,
@@ -63,7 +65,7 @@ export const AccountMenu = () => {
                     id="menu_version_button"
                     className="text-sm"
                   >
-                    Version
+                    {t('header.account_menu.version')}
                   </span>
                   <div
                     className={cn(
@@ -73,7 +75,7 @@ export const AccountMenu = () => {
                     )}
                   >
                     {version}{" "}
-                    {isLatestVersion ? "(latest)" : "(update available)"}
+                    {isLatestVersion ? t('header.account_menu.latest') : t('header.account_menu.update_available')}
                   </div>
                 </div>
               </div>
@@ -89,7 +91,7 @@ export const AccountMenu = () => {
                   data-testid="menu_settings_button"
                   id="menu_settings_button"
                 >
-                  Settings
+                  {t('header.account_menu.settings')}
                 </span>
               </HeaderMenuItemButton>
 
@@ -104,7 +106,7 @@ export const AccountMenu = () => {
                       data-testid="menu_admin_page_button"
                       id="menu_admin_page_button"
                     >
-                      Admin Page
+                      {t('header.account_menu.admin_page')}
                     </span>
                   </HeaderMenuItemButton>
                 </div>
@@ -114,7 +116,7 @@ export const AccountMenu = () => {
                 href={ENABLE_DATASTAX_LANGFLOW ? DATASTAX_DOCS_URL : DOCS_URL}
               >
                 <span data-testid="menu_docs_button" id="menu_docs_button">
-                  Docs
+                  {t('header.account_menu.docs')}
                 </span>
               </HeaderMenuItemLink>
             </div>
@@ -127,7 +129,7 @@ export const AccountMenu = () => {
                   className="flex items-center gap-2"
                 >
                   <FaGithub className="h-4 w-4" />
-                  GitHub
+                  {t('header.account_menu.github')}
                 </span>
               </HeaderMenuItemLink>
               <HeaderMenuItemLink newPage href={DISCORD_URL}>
@@ -137,7 +139,7 @@ export const AccountMenu = () => {
                   className="flex items-center gap-2"
                 >
                   <FaDiscord className="h-4 w-4 text-[#5865F2]" />
-                  Discord
+                  {t('header.account_menu.discord')}
                 </span>
               </HeaderMenuItemLink>
               <HeaderMenuItemLink newPage href={TWITTER_URL}>
@@ -151,13 +153,13 @@ export const AccountMenu = () => {
                     name="TwitterX"
                     className="h-4 w-4"
                   />
-                  X
+                  {t('header.account_menu.x')}
                 </span>
               </HeaderMenuItemLink>
             </div>
 
             <div className="flex items-center justify-between px-4 py-[6.5px] text-sm">
-              <span className="">Theme</span>
+              <span className="">{t('header.account_menu.theme')}</span>
               <div className="relative top-[1px] float-right">
                 <ThemeButtons />
               </div>
@@ -166,7 +168,7 @@ export const AccountMenu = () => {
             {!autoLogin && (
               <div>
                 <HeaderMenuItemButton onClick={handleLogout} icon="log-out">
-                  Logout
+                  {t('header.account_menu.logout')}
                 </HeaderMenuItemButton>
               </div>
             )}

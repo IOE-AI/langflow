@@ -18,6 +18,7 @@ import { useEffect, useRef, useState } from "react";
 import { AccountMenu } from "./components/AccountMenu";
 import FlowMenu from "./components/FlowMenu";
 import LangflowCounts from "./components/langflow-counts";
+import { useTranslation } from "react-i18next";
 
 export default function AppHeader(): JSX.Element {
   const notificationCenter = useAlertStore((state) => state.notificationCenter);
@@ -27,6 +28,7 @@ export default function AppHeader(): JSX.Element {
   const notificationRef = useRef<HTMLButtonElement | null>(null);
   const notificationContentRef = useRef<HTMLDivElement | null>(null);
   useTheme();
+  const { t } = useTranslation();
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -108,7 +110,7 @@ export default function AppHeader(): JSX.Element {
           onClose={() => setActiveState(null)}
         >
           <ShadTooltip
-            content="Notifications and errors"
+            content={t('header.notifications_and_errors')}
             side="bottom"
             styleClasses="z-10"
           >
@@ -135,7 +137,7 @@ export default function AppHeader(): JSX.Element {
                     strokeWidth={2}
                   />
                   <span className="hidden whitespace-nowrap">
-                    Notifications
+                    {t('header.notifications')}
                   </span>
                 </div>
               </Button>

@@ -19,8 +19,10 @@ import {
   inputHandlerEventType,
   signUpInputStateType,
 } from "../../types/components";
+import { useTranslation } from 'react-i18next';
 
 export default function SignUp(): JSX.Element {
+  const { t } = useTranslation();
   const [inputState, setInputState] =
     useState<signUpInputStateType>(CONTROL_INPUT_STATE);
 
@@ -91,16 +93,16 @@ export default function SignUp(): JSX.Element {
       <div className="flex h-full w-full flex-col items-center justify-center bg-muted">
         <div className="flex w-72 flex-col items-center justify-center gap-2">
           <LangflowLogo
-            title="Langflow logo"
+            title={t('langflow_logo')}
             className="mb-4 h-10 w-10 scale-[1.5]"
           />
           <span className="mb-6 text-2xl font-semibold text-primary">
-            Sign up for Langflow
+            {t('signup_title')}
           </span>
           <div className="mb-3 w-full">
             <Form.Field name="username">
               <Form.Label className="data-[invalid]:label-invalid">
-                Username <span className="font-medium text-destructive">*</span>
+                {t('username')} <span className="font-medium text-destructive">*</span>
               </Form.Label>
 
               <Form.Control asChild>
@@ -112,19 +114,19 @@ export default function SignUp(): JSX.Element {
                   value={username}
                   className="w-full"
                   required
-                  placeholder="Username"
+                  placeholder={t('username_placeholder')}
                 />
               </Form.Control>
 
               <Form.Message match="valueMissing" className="field-invalid">
-                Please enter your username
+                {t('username_required')}
               </Form.Message>
             </Form.Field>
           </div>
           <div className="mb-3 w-full">
             <Form.Field name="password" serverInvalid={password != cnfPassword}>
               <Form.Label className="data-[invalid]:label-invalid">
-                Password <span className="font-medium text-destructive">*</span>
+                {t('password')} <span className="font-medium text-destructive">*</span>
               </Form.Label>
               <InputComponent
                 onChange={(value) => {
@@ -134,17 +136,17 @@ export default function SignUp(): JSX.Element {
                 isForm
                 password={true}
                 required
-                placeholder="Password"
+                placeholder={t('password_placeholder')}
                 className="w-full"
               />
 
               <Form.Message className="field-invalid" match="valueMissing">
-                Please enter a password
+                {t('password_required')}
               </Form.Message>
 
               {password != cnfPassword && (
                 <Form.Message className="field-invalid">
-                  Passwords do not match
+                  {t('password_not_match')}
                 </Form.Message>
               )}
             </Form.Field>
@@ -155,8 +157,7 @@ export default function SignUp(): JSX.Element {
               serverInvalid={password != cnfPassword}
             >
               <Form.Label className="data-[invalid]:label-invalid">
-                Confirm your password{" "}
-                <span className="font-medium text-destructive">*</span>
+                {t('confirm_password')} <span className="font-medium text-destructive">*</span>
               </Form.Label>
 
               <InputComponent
@@ -167,12 +168,12 @@ export default function SignUp(): JSX.Element {
                 isForm
                 password={true}
                 required
-                placeholder="Confirm your password"
+                placeholder={t('confirm_password_placeholder')}
                 className="w-full"
               />
 
               <Form.Message className="field-invalid" match="valueMissing">
-                Please confirm your password
+                {t('confirm_password_required')}
               </Form.Message>
             </Form.Field>
           </div>
@@ -186,14 +187,14 @@ export default function SignUp(): JSX.Element {
                   handleSignup();
                 }}
               >
-                Sign up
+                {t('signup_button')}
               </Button>
             </Form.Submit>
           </div>
           <div className="w-full">
             <CustomLink to="/login">
               <Button className="w-full" variant="outline">
-                Already have an account?&nbsp;<b>Sign in</b>
+                {t('already_have_account')} <b>{t('signin')}</b>
               </Button>
             </CustomLink>
           </div>

@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/popover";
 import { classNames, cn } from "@/utils/utils";
 import { PopoverAnchor } from "@radix-ui/react-popover";
+import { useTranslation } from "react-i18next";
+
 const CustomInputPopoverObject = ({
   id,
   refInput,
@@ -39,6 +41,10 @@ const CustomInputPopoverObject = ({
   handleKeyDown,
   showOptions,
 }) => {
+  const { t } = useTranslation();
+  const finalPlaceholder = placeholder ?? t('dropdown.choose_option');
+  const finalOptionsPlaceholder = optionsPlaceholder ?? t('dropdown.search_options');
+
   const PopoverContentInput = editNode
     ? PopoverContent
     : PopoverContentWithoutPortal;
@@ -79,7 +85,7 @@ const CustomInputPopoverObject = ({
           }}
           required={required}
           className={classNames(className!)}
-          placeholder={placeholder}
+          placeholder={finalPlaceholder}
           onChange={handleInputChange}
           onKeyDown={(e) => {
             handleKeyDown(e);
@@ -104,7 +110,7 @@ const CustomInputPopoverObject = ({
             return 0;
           }}
         >
-          <CommandInput placeholder={optionsPlaceholder} />
+          <CommandInput placeholder={finalOptionsPlaceholder} />
           <CommandList>
             <CommandGroup defaultChecked={false}>
               {options.map((option, index) => (

@@ -15,8 +15,10 @@ import {
   inputHandlerEventType,
   loginInputStateType,
 } from "../../types/components";
+import { useTranslation } from 'react-i18next';
 
 export default function LoginPage(): JSX.Element {
+  const { t } = useTranslation();
   const [inputState, setInputState] =
     useState<loginInputStateType>(CONTROL_LOGIN_STATE);
 
@@ -67,16 +69,16 @@ export default function LoginPage(): JSX.Element {
       <div className="flex h-full w-full flex-col items-center justify-center bg-muted">
         <div className="flex w-72 flex-col items-center justify-center gap-2">
           <LangflowLogo
-            title="Langflow logo"
+            title={t('langflow_logo')}
             className="mb-4 h-10 w-10 scale-[1.5]"
           />
           <span className="mb-6 text-2xl font-semibold text-primary">
-            Sign in to Langflow
+            {t('signin_title')}
           </span>
           <div className="mb-3 w-full">
             <Form.Field name="username">
               <Form.Label className="data-[invalid]:label-invalid">
-                Username <span className="font-medium text-destructive">*</span>
+                {t('username')} <span className="font-medium text-destructive">*</span>
               </Form.Label>
 
               <Form.Control asChild>
@@ -88,19 +90,19 @@ export default function LoginPage(): JSX.Element {
                   value={username}
                   className="w-full"
                   required
-                  placeholder="Username"
+                  placeholder={t('username_placeholder')}
                 />
               </Form.Control>
 
               <Form.Message match="valueMissing" className="field-invalid">
-                Please enter your username
+                {t('username_required')}
               </Form.Message>
             </Form.Field>
           </div>
           <div className="mb-3 w-full">
             <Form.Field name="password">
               <Form.Label className="data-[invalid]:label-invalid">
-                Password <span className="font-medium text-destructive">*</span>
+                {t('password')} <span className="font-medium text-destructive">*</span>
               </Form.Label>
 
               <InputComponent
@@ -111,26 +113,26 @@ export default function LoginPage(): JSX.Element {
                 isForm
                 password={true}
                 required
-                placeholder="Password"
+                placeholder={t('password_placeholder')}
                 className="w-full"
               />
 
               <Form.Message className="field-invalid" match="valueMissing">
-                Please enter your password
+                {t('password_required')}
               </Form.Message>
             </Form.Field>
           </div>
           <div className="w-full">
             <Form.Submit asChild>
               <Button className="mr-3 mt-6 w-full" type="submit">
-                Sign in
+                {t('signin_button')}
               </Button>
             </Form.Submit>
           </div>
           <div className="w-full">
             <CustomLink to="/signup">
               <Button className="w-full" variant="outline" type="button">
-                Don't have an account?&nbsp;<b>Sign Up</b>
+                {t('no_account')} <b>{t('signup')}</b>
               </Button>
             </CustomLink>
           </div>

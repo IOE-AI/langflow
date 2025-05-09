@@ -16,8 +16,10 @@ import ModalsComponent from "../../components/modalsComponent";
 import useFileDrop from "../../hooks/use-on-file-drop";
 import EmptyFolder from "../emptyFolder";
 import McpServerTab from "./components/McpServerTab";
+import { useTranslation } from 'react-i18next';
 
 const HomePage = ({ type }: { type: "flows" | "components" | "mcp" }) => {
+  const { t } = useTranslation();
   const [view, setView] = useState<"grid" | "list">(() => {
     const savedView = localStorage.getItem("view");
     return savedView === "grid" || savedView === "list" ? savedView : "list";
@@ -98,7 +100,13 @@ const HomePage = ({ type }: { type: "flows" | "components" | "mcp" }) => {
   return (
     <CardsWrapComponent
       onFileDrop={handleFileDrop}
-      dragMessage={`Drop your ${isEmptyFolder ? "flows or components" : flowType} here`}
+      dragMessage={
+        isEmptyFolder
+          ? t('drag_flows_or_components')
+          : flowType === 'flows'
+            ? t('drag_flows')
+            : t('drag_components')
+      }
     >
       <div
         className="flex h-full w-full flex-col overflow-y-auto"
@@ -154,27 +162,27 @@ const HomePage = ({ type }: { type: "flows" | "components" | "mcp" }) => {
                     )
                   ) : flowType === "flows" ? (
                     <div className="pt-2 text-center text-sm text-secondary-foreground">
-                      No flows in this project.{" "}
+                      {t('no_flows')} {" "}
                       <a
                         onClick={() => setNewProjectModal(true)}
                         className="cursor-pointer underline"
                       >
-                        Create a new flow
+                        {t('create_new_flow')}
                       </a>
-                      , or browse the store.
+                      {t('or_browse_store')}
                     </div>
                   ) : (
                     <div className="pt-2 text-center text-sm text-secondary-foreground">
-                      No saved or custom components. Learn more about{" "}
+                      {t('no_components')}
                       <a
                         href="https://docs.langflow.org/components-custom-components"
                         target="_blank"
                         rel="noreferrer"
                         className="underline"
                       >
-                        creating custom components
+                        {t('creating_custom_components')}
                       </a>
-                      , or browse the store.
+                      {t('or_browse_store')}
                     </div>
                   )}
                 </div>

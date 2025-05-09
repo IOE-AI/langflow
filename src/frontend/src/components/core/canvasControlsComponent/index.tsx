@@ -16,6 +16,7 @@ import { cloneDeep } from "lodash";
 import { useCallback, useEffect } from "react";
 import { useShallow } from "zustand/react/shallow";
 import { shallow } from "zustand/shallow";
+import { useTranslation } from "react-i18next";
 
 type CustomControlButtonProps = {
   iconName: string;
@@ -76,6 +77,7 @@ const CanvasControls = ({ children }) => {
   );
   const setCurrentFlow = useFlowStore((state) => state.setCurrentFlow);
   const autoSaving = useFlowsManagerStore((state) => state.autoSaving);
+  const { t } = useTranslation();
 
   useEffect(() => {
     store.setState({
@@ -115,7 +117,7 @@ const CanvasControls = ({ children }) => {
       {/* Zoom In */}
       <CustomControlButton
         iconName="ZoomIn"
-        tooltipText="Zoom In"
+        tooltipText={t('canvas_controls.zoom_in')}
         onClick={zoomIn}
         disabled={maxZoomReached}
         testId="zoom_in"
@@ -123,7 +125,7 @@ const CanvasControls = ({ children }) => {
       {/* Zoom Out */}
       <CustomControlButton
         iconName="ZoomOut"
-        tooltipText="Zoom Out"
+        tooltipText={t('canvas_controls.zoom_out')}
         onClick={zoomOut}
         disabled={minZoomReached}
         testId="zoom_out"
@@ -131,14 +133,14 @@ const CanvasControls = ({ children }) => {
       {/* Zoom To Fit */}
       <CustomControlButton
         iconName="maximize"
-        tooltipText="Fit To Zoom"
+        tooltipText={t('canvas_controls.fit_to_zoom')}
         onClick={fitView}
         testId="fit_view"
       />
       {/* Lock/Unlock */}
       <CustomControlButton
         iconName={isInteractive ? "LockOpen" : "Lock"}
-        tooltipText={isInteractive ? "Lock" : "Unlock"}
+        tooltipText={isInteractive ? t('canvas_controls.lock') : t('canvas_controls.unlock')}
         onClick={onToggleInteractivity}
         backgroundClasses={isInteractive ? "" : "bg-destructive"}
         iconClasses={

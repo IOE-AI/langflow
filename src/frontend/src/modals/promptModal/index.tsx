@@ -7,12 +7,6 @@ import { Badge } from "../../components/ui/badge";
 import { Button } from "../../components/ui/button";
 import { Textarea } from "../../components/ui/textarea";
 import {
-  BUG_ALERT,
-  PROMPT_ERROR_ALERT,
-  PROMPT_SUCCESS_ALERT,
-  TEMP_NOTICE_ALERT,
-} from "../../constants/alerts_constants";
-import {
   EDIT_TEXT_PLACEHOLDER,
   INVALID_CHARACTERS,
   MAX_WORDS_HIGHLIGHT,
@@ -24,6 +18,7 @@ import { handleKeyDown } from "../../utils/reactflowUtils";
 import { classNames } from "../../utils/utils";
 import BaseModal from "../baseModal";
 import varHighlightHTML from "./utils/var-highlight-html";
+import { useTranslation } from "react-i18next";
 
 export default function PromptModal({
   field_name = "",
@@ -50,6 +45,7 @@ export default function PromptModal({
   const [scrollPosition, setScrollPosition] = useState(0);
   const previewRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const { t } = useTranslation();
 
   function checkVariables(valueToCheck: string): void {
     const regex = /\{([^{}]+)\}/g;
@@ -150,24 +146,24 @@ export default function PromptModal({
             }
             if (!inputVariables || inputVariables.length === 0) {
               setNoticeData({
-                title: TEMP_NOTICE_ALERT,
+                title: t('alerts.tempNotice'),
               });
             } else {
               setSuccessData({
-                title: PROMPT_SUCCESS_ALERT,
+                title: t('alerts.promptSuccess'),
               });
             }
           } else {
             setIsEdit(true);
             setErrorData({
-              title: BUG_ALERT,
+              title: t('alerts.bug'),
             });
           }
         },
         onError: (error) => {
           setIsEdit(true);
           return setErrorData({
-            title: PROMPT_ERROR_ALERT,
+            title: t('alerts.promptError'),
             list: [error.response.data.detail ?? ""],
           });
         },

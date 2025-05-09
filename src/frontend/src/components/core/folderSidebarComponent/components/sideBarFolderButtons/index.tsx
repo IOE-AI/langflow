@@ -49,6 +49,7 @@ import { HeaderButtons } from "./components/header-buttons";
 import { InputEditFolderName } from "./components/input-edit-folder-name";
 import { MCPServerNotice } from "./components/mcp-server-notice";
 import { SelectOptions } from "./components/select-options";
+import { useTranslation } from "react-i18next";
 
 type SideBarFoldersButtonsComponentProps = {
   handleChangeFolder?: (id: string) => void;
@@ -128,6 +129,8 @@ const SideBarFoldersButtonsComponent = ({
     loading ||
     isDeletingFolder;
 
+  const { t } = useTranslation();
+
   const handleUploadFlowsToFolder = () => {
     createFileUpload().then((files: File[]) => {
       if (files?.length === 0) {
@@ -138,7 +141,7 @@ const SideBarFoldersButtonsComponent = ({
         if (objects.every((flow) => flow.data?.nodes)) {
           uploadFlow({ files }).then(() => {
             setSuccessData({
-              title: "Uploaded successfully",
+              title: t('sidebar_folder.uploaded_successfully'),
             });
           });
         } else {
@@ -150,13 +153,13 @@ const SideBarFoldersButtonsComponent = ({
               {
                 onSuccess: () => {
                   setSuccessData({
-                    title: "Project uploaded successfully.",
+                    title: t('sidebar_folder.project_uploaded_successfully'),
                   });
                 },
                 onError: (err) => {
                   console.log(err);
                   setErrorData({
-                    title: `Error on uploading your project, try dragging it into an existing project.`,
+                    title: t('sidebar_folder.error_uploading_project'),
                     list: [err["response"]["data"]["message"]],
                   });
                 },
@@ -188,7 +191,7 @@ const SideBarFoldersButtonsComponent = ({
           const filename =
             response.headers?.["content-disposition"]
               ?.split("filename=")[1]
-              ?.replace(/['"]/g, "") ?? "flows.zip";
+              ?.replace(/['"]/g, "") ?? t('sidebar_folder.default_download_filename');
 
           link.setAttribute("download", filename);
           document.body.appendChild(link);

@@ -6,6 +6,7 @@ import {
 import DeleteConfirmationModal from "@/modals/deleteConfirmationModal";
 import useAlertStore from "@/stores/alertStore";
 import { cn } from "@/utils/utils";
+import { useTranslation } from "react-i18next";
 
 interface GeneralDeleteConfirmationModalProps {
   option: string;
@@ -19,6 +20,7 @@ const GeneralDeleteConfirmationModal = ({
   const setErrorData = useAlertStore((state) => state.setErrorData);
   const { mutate: mutateDeleteGlobalVariable } = useDeleteGlobalVariables();
   const { data: globalVariables } = useGetGlobalVariables();
+  const { t } = useTranslation();
 
   async function handleDelete(key: string) {
     if (!globalVariables) return;
@@ -32,16 +34,16 @@ const GeneralDeleteConfirmationModal = ({
           },
           onError: () => {
             setErrorData({
-              title: "Error deleting variable",
-              list: [cn("ID not found for variable: ", key)],
+              title: t('deleteConfirmationModal.errorTitle'),
+              list: [t('deleteConfirmationModal.idNotFound', { key })],
             });
           },
         },
       );
     } else {
       setErrorData({
-        title: "Error deleting variable",
-        list: [cn("ID not found for variable: ", key)],
+        title: t('deleteConfirmationModal.errorTitle'),
+        list: [t('deleteConfirmationModal.idNotFound', { key })],
       });
     }
   }
@@ -54,7 +56,7 @@ const GeneralDeleteConfirmationModal = ({
           e.preventDefault();
           handleDelete(option);
         }}
-        description={'variable "' + option + '"'}
+        description={t('deleteConfirmationModal.variable', { option })}
         asChild
       >
         <button

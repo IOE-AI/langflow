@@ -1,4 +1,5 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import { useCustomNavigate } from "@/customization/hooks/use-custom-navigate";
 import useAddFlow from "@/hooks/flows/use-add-flow";
@@ -82,6 +83,7 @@ export const MenuBar = memo((): JSX.Element => {
   const measureRef = useRef<HTMLSpanElement>(null);
   const changesNotSaved = useUnsavedChanges();
   const [flowNames, setFlowNames] = useState<string[]>([]);
+  const { t } = useTranslation();
 
   const { data: folders, isFetched: isFoldersFetched } = useGetFoldersQuery();
   const flows = useFlowsManagerStore((state) => state.flows);
@@ -124,25 +126,24 @@ export const MenuBar = memo((): JSX.Element => {
 
   function printByBuildStatus() {
     if (isBuilding) {
-      return <div className="truncate">Building...</div>;
+      return <div className="truncate">{t('header.flow_menu.building')}</div>;
     } else if (saveLoading) {
-      return <div className="truncate">Saving...</div>;
+      return <div className="truncate">{t('header.flow_menu.saving')}</div>;
     }
-    // return savedText;
     return (
       <div
         data-testid="menu_status_saved_flow_button"
         id="menu_status_saved_flow_button"
         className="shrink-0 text-sm font-medium text-accent-emerald-foreground"
       >
-        Saved
+        {t('header.flow_menu.saved')}
       </div>
     );
   }
 
   const handleSave = () => {
     saveFlow().then(() => {
-      setSuccessData({ title: "Saved successfully" });
+      setSuccessData({ title: t('header.flow_menu.saved_successfully') });
     });
   };
 
@@ -190,19 +191,19 @@ export const MenuBar = memo((): JSX.Element => {
       saveFlow(newFlow)
         .then(() => {
           setCurrentFlow(newFlow);
-          setSuccessData({ title: "Flow name updated successfully" });
+          setSuccessData({ title: t('header.flow_menu.flow_name_updated_successfully') });
         })
         .catch((error) => {
           setErrorData({
-            title: "Error updating flow name",
+            title: t('header.flow_menu.error_updating_flow_name'),
             list: [(error as Error).message],
           });
           setFlowName(currentFlowName ?? "");
         });
     } else if (isInvalidName) {
       setErrorData({
-        title: "Invalid flow name",
-        list: ["Name already exists"],
+        title: t('header.flow_menu.invalid_flow_name'),
+        list: [t('header.flow_menu.name_already_exists')],
       });
       setFlowName(currentFlowName ?? "");
     } else {
@@ -343,7 +344,7 @@ export const MenuBar = memo((): JSX.Element => {
               />
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-44 bg-white dark:bg-background">
-              <DropdownMenuLabel>Options</DropdownMenuLabel>
+              <DropdownMenuLabel>{t('header.flow_menu.options')}</DropdownMenuLabel>
               <DropdownMenuItem
                 onClick={() => {
                   handleAddFlow();
@@ -353,7 +354,7 @@ export const MenuBar = memo((): JSX.Element => {
                 id="menu_new_flow_button"
               >
                 <IconComponent name="Plus" className="header-menu-options" />
-                New
+                {t('header.flow_menu.new')}
               </DropdownMenuItem>
 
               <DropdownMenuItem
@@ -368,7 +369,7 @@ export const MenuBar = memo((): JSX.Element => {
                   name="SquarePen"
                   className="header-menu-options"
                 />
-                Edit Details
+                {t('header.flow_menu.edit_details')}
               </DropdownMenuItem>
               {!autoSaving && (
                 <DropdownMenuItem
@@ -378,7 +379,7 @@ export const MenuBar = memo((): JSX.Element => {
                   id="menu_save_flow_button"
                 >
                   <ToolbarSelectItem
-                    value="Save"
+                    value={t('header.flow_menu.save')}
                     icon="Save"
                     dataTestId=""
                     shortcut={
@@ -401,7 +402,7 @@ export const MenuBar = memo((): JSX.Element => {
                   name="ScrollText"
                   className="header-menu-options"
                 />
-                Logs
+                {t('header.flow_menu.logs')}
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="cursor-pointer"
@@ -409,7 +410,7 @@ export const MenuBar = memo((): JSX.Element => {
                   uploadFlow({ position: { x: 300, y: 100 } })
                     .then(() => {
                       setSuccessData({
-                        title: "Uploaded successfully",
+                        title: t('header.flow_menu.uploaded_successfully'),
                       });
                     })
                     .catch((error) => {
@@ -423,7 +424,7 @@ export const MenuBar = memo((): JSX.Element => {
                 id="menu_import_flow_button"
               >
                 <IconComponent name="FileUp" className="header-menu-options" />
-                Import
+                {t('header.flow_menu.import')}
               </DropdownMenuItem>
               <ExportModal>
                 <div className="header-menubar-item">
@@ -431,7 +432,7 @@ export const MenuBar = memo((): JSX.Element => {
                     name="FileDown"
                     className="header-menu-options"
                   />
-                  Export
+                  {t('header.flow_menu.export')}
                 </div>
               </ExportModal>
               <DropdownMenuItem
@@ -443,7 +444,7 @@ export const MenuBar = memo((): JSX.Element => {
                 id="menu_undo_flow_button"
               >
                 <ToolbarSelectItem
-                  value="Undo"
+                  value={t('header.flow_menu.undo')}
                   icon="Undo"
                   dataTestId=""
                   shortcut={
@@ -461,7 +462,7 @@ export const MenuBar = memo((): JSX.Element => {
                 id="menu_redo_flow_button"
               >
                 <ToolbarSelectItem
-                  value="Redo"
+                  value={t('header.flow_menu.redo')}
                   icon="Redo"
                   dataTestId=""
                   shortcut={
@@ -482,7 +483,7 @@ export const MenuBar = memo((): JSX.Element => {
                   name="RefreshCcw"
                   className="header-menu-options"
                 />
-                Refresh All
+                {t('header.flow_menu.refresh_all')}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -516,20 +517,20 @@ export const MenuBar = memo((): JSX.Element => {
                     hour: "numeric",
                     minute: "numeric",
                   })
-                : "Never")
+                : t('header.flow_menu.never'))
             ) : (
               <div className="flex w-48 flex-col gap-1 py-1">
                 <h2 className="text-base font-semibold">
-                  Auto-saving is disabled
+                  {t('header.flow_menu.auto_saving_disabled')}
                 </h2>
                 <p className="text-muted-foreground">
                   <a
                     href="https://docs.langflow.org/configuration-auto-save"
                     className="text-secondary underline"
                   >
-                    Enable auto-saving
-                  </a>{" "}
-                  to avoid losing progress.
+                    {t('header.flow_menu.enable_auto_saving')}
+                  </a>{' '}
+                  {t('header.flow_menu.to_avoid_losing_progress')}
                 </p>
               </div>
             )
@@ -558,7 +559,7 @@ export const MenuBar = memo((): JSX.Element => {
               }
             >
               <IconComponent name="Square" className="h-4 w-4" />
-              <span>Stop</span>
+              <span>{t('header.flow_menu.stop')}</span>
             </button>
           </div>
         </ShadTooltip>

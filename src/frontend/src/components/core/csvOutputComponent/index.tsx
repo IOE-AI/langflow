@@ -13,6 +13,7 @@ import ForwardedIconComponent from "../../common/genericIconComponent";
 import Loading from "../../ui/loading";
 import TableComponent from "../parameterRenderComponent/components/tableComponent";
 import { convertCSVToData } from "./helpers/convert-data-function";
+import { useTranslation } from "react-i18next";
 
 function CsvOutputComponent({
   csvNode,
@@ -30,16 +31,18 @@ function CsvOutputComponent({
     console.log("Error parsing JSON");
   }
 
+  const { t } = useTranslation();
+
   if (!file) {
     return (
       <div className="align-center flex h-full w-full flex-col items-center justify-center gap-5">
         <div className="align-center flex w-full justify-center gap-2">
           <ForwardedIconComponent name="Table" />
-          {CSVViewErrorTitle}
+          {t('csv_output.title')}
         </div>
         <div className="align-center flex w-full justify-center">
           <div className="langflow-chat-desc align-center flex justify-center px-6 py-8">
-            <div className="langflow-chat-desc-span">{CSVError}</div>
+            <div className="langflow-chat-desc-span">{t('csv_output.error')}</div>
           </div>
         </div>
       </div>
@@ -86,11 +89,11 @@ function CsvOutputComponent({
         <div className="align-center flex h-full w-full flex-col items-center justify-center gap-5">
           <div className="align-center flex w-full justify-center gap-2">
             <ForwardedIconComponent name="Table" />
-            {CSVViewErrorTitle}
+            {t('csv_output.title')}
           </div>
           <div className="align-center flex w-full justify-center">
             <div className="langflow-chat-desc align-center flex justify-center px-6 py-8">
-              <div className="langflow-chat-desc-span">{CSVNoDataError}</div>
+              <div className="langflow-chat-desc-span">{t('csv_output.no_data')}</div>
             </div>
           </div>
         </div>
@@ -99,11 +102,11 @@ function CsvOutputComponent({
         <div className="align-center flex h-full w-full flex-col items-center justify-center gap-5">
           <div className="align-center flex w-full justify-center gap-2">
             <ForwardedIconComponent name="Table" />
-            {CSVViewErrorTitle}
+            {t('csv_output.title')}
           </div>
           <div className="align-center flex w-full justify-center">
             <div className="langflow-chat-desc align-center flex justify-center px-6 py-8">
-              <div className="langflow-chat-desc-span">{CSVError}</div>
+              <div className="langflow-chat-desc-span">{t('csv_output.error')}</div>
             </div>
           </div>
         </div>
@@ -120,7 +123,7 @@ function CsvOutputComponent({
             columnDefs={colDefs}
             defaultColDef={defaultColDef}
             scrollbarWidth={8}
-            overlayNoRowsTemplate="No data available"
+            overlayNoRowsTemplate={t('csv_output.no_data')}
           />
         </div>
       )}

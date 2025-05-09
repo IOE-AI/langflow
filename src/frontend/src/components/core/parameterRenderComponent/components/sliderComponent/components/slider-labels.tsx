@@ -1,4 +1,5 @@
 import IconComponent from "@/components/common/genericIconComponent";
+import { useTranslation } from "react-i18next";
 
 export const SliderLabels = ({
   minLabel,
@@ -11,6 +12,8 @@ export const SliderLabels = ({
   minLabelIcon: string;
   maxLabelIcon: string;
 }) => {
+  const { t } = useTranslation();
+
   return (
     <>
       <div className="text mt-2 grid grid-cols-2 gap-x-2 text-sm">
@@ -24,7 +27,7 @@ export const SliderLabels = ({
             data-testid="min_label"
             className="text-xs text-placeholder-foreground"
           >
-            {minLabel}
+            {t(minLabel)}
           </span>
         </div>
         <div className="flex items-center justify-end">
@@ -32,7 +35,7 @@ export const SliderLabels = ({
             data-testid="max_label"
             className="text-xs text-placeholder-foreground"
           >
-            {maxLabel}
+            {t(maxLabel)}
           </span>
           <IconComponent
             className="ml-1 h-4 w-4 text-placeholder-foreground"

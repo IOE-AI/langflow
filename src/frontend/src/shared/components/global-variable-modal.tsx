@@ -2,10 +2,12 @@ import ForwardedIconComponent from "@/components/common/genericIconComponent";
 import GlobalVariableModal from "@/components/core/GlobalVariableModal/GlobalVariableModal";
 import { CommandItem } from "@/components/ui/command";
 import { cn } from "@/utils/utils";
+import { useTranslation } from "react-i18next";
 
 interface GeneralGlobalVariableModalProps {}
 
 const GeneralGlobalVariableModal = ({}: GeneralGlobalVariableModalProps) => {
+  const { t } = useTranslation();
   return (
     <>
       <GlobalVariableModal disabled={false}>
@@ -15,7 +17,7 @@ const GeneralGlobalVariableModal = ({}: GeneralGlobalVariableModalProps) => {
             className={cn("mr-2 h-4 w-4 text-primary")}
             aria-hidden="true"
           />
-          <span>Add New Variable</span>
+          <span>{t('globalVariableModal.addNewVariable')}</span>
         </CommandItem>
       </GlobalVariableModal>
     </>

@@ -6,6 +6,7 @@ import { TableOptionsTypeAPI } from "@/types/api";
 import { AgGridReact } from "ag-grid-react";
 import { ForwardedRef, forwardRef } from "react";
 import BaseModal from "../baseModal";
+import { useTranslation } from "react-i18next";
 
 interface TableModalProps extends TableComponentProps {
   tableTitle: string;
@@ -37,6 +38,7 @@ const TableModal = forwardRef<AgGridReact, TableModalProps>(
     }: TableModalProps,
     ref: ForwardedRef<AgGridReact>,
   ) => {
+    const { t } = useTranslation();
     const handleSetOpen = (newOpen: boolean) => {
       if (!newOpen && onCancel) {
         onCancel();
@@ -85,7 +87,7 @@ const TableModal = forwardRef<AgGridReact, TableModalProps>(
           ></TableComponent>
         </BaseModal.Content>
         <BaseModal.Footer
-          submit={onSave ? { label: "Save", onClick: onSave } : undefined}
+          submit={onSave ? { label: t('save'), onClick: onSave } : undefined}
         ></BaseModal.Footer>
       </BaseModal>
     );

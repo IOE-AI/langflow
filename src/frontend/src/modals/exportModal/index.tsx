@@ -14,9 +14,11 @@ import useAlertStore from "../../stores/alertStore";
 import { useDarkStore } from "../../stores/darkStore";
 import { downloadFlow, removeApiKeys } from "../../utils/reactflowUtils";
 import BaseModal from "../baseModal";
+import { useTranslation } from "react-i18next";
 
 const ExportModal = forwardRef(
   (props: { children: ReactNode }, ref): JSX.Element => {
+    const { t } = useTranslation();
     const version = useDarkStore((state) => state.version);
     const setNoticeData = useAlertStore((state) => state.setNoticeData);
     const [checked, setChecked] = useState(false);
@@ -53,7 +55,7 @@ const ExportModal = forwardRef(
               description,
             );
             setNoticeData({
-              title: API_WARNING_NOTICE_ALERT,
+              title: t('constants.alertSaveWithApi'),
             });
           } else
             downloadFlow(
@@ -75,8 +77,8 @@ const ExportModal = forwardRef(
         }}
       >
         <BaseModal.Trigger asChild>{props.children}</BaseModal.Trigger>
-        <BaseModal.Header description={EXPORT_DIALOG_SUBTITLE}>
-          <span className="pr-2">Export</span>
+        <BaseModal.Header description={t('constants.exportDialogSubtitle')}>
+          <span className="pr-2">{t('export')}</span>
           <IconComponent
             name="Download"
             className="h-6 w-6 pl-1 text-foreground"
@@ -99,15 +101,15 @@ const ExportModal = forwardRef(
               }}
             />
             <label htmlFor="terms" className="export-modal-save-api text-sm">
-              {SAVE_WITH_API_CHECKBOX}
+              {t('constants.saveWithApiCheckbox')}
             </label>
           </div>
           <span className="mt-1 text-xs text-destructive">
-            {ALERT_SAVE_WITH_API}
+            {t('alerts.apiWarningNotice')}
           </span>
         </BaseModal.Content>
 
-        <BaseModal.Footer submit={{ label: "Export", loading: isBuilding }} />
+        <BaseModal.Footer submit={{ label: t('export'), loading: isBuilding }} />
       </BaseModal>
     );
   },

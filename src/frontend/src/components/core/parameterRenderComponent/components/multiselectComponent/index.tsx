@@ -18,6 +18,7 @@ import {
   PopoverTrigger,
 } from "../../../../ui/popover";
 import { InputProps, MultiselectComponentType } from "../../types";
+import { useTranslation } from "react-i18next";
 
 export default function MultiselectComponent({
   disabled,
@@ -28,6 +29,7 @@ export default function MultiselectComponent({
   editNode = false,
   id = "",
 }: InputProps<string[], MultiselectComponentType>): JSX.Element {
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const treatedValue = typeof value === "string" ? [value] : value;
 
@@ -103,6 +105,9 @@ export default function MultiselectComponent({
     }
   };
 
+  const chooseOptionText = t('dropdown.choose_option');
+  const searchOptionsText = t('dropdown.search_options');
+
   const renderDropdownTrigger = () => (
     <PopoverTrigger asChild>
       <Button
@@ -124,7 +129,7 @@ export default function MultiselectComponent({
           {treatedValue.length > 0 &&
           options.find((option) => treatedValue.includes(option))
             ? treatedValue.join(", ")
-            : "Choose an option..."}
+            : chooseOptionText}
         </span>
         <ForwardedIconComponent
           name="ChevronsUpDown"
@@ -144,7 +149,7 @@ export default function MultiselectComponent({
         onChange={(event) => {
           setSearchValue(event.target.value);
         }}
-        placeholder="Search options..."
+        placeholder={searchOptionsText}
         className="flex h-9 w-full rounded-md bg-transparent py-3 text-sm outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-50"
       />
       <Button

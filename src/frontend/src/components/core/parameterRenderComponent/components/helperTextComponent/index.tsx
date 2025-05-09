@@ -1,5 +1,6 @@
 import ForwardedIconComponent from "@/components/common/genericIconComponent";
 import { cn } from "@/utils/utils";
+import { useTranslation } from "react-i18next";
 
 type HelperTextComponentProps = {
   helperText: string;
@@ -10,6 +11,8 @@ const HelperTextComponent = ({
   helperText,
   helperMetadata = { icon: undefined, variant: "muted-foreground" },
 }: HelperTextComponentProps) => {
+  const { t } = useTranslation();
+
   return (
     <div className="flex w-full flex-row items-center gap-2">
       {helperMetadata?.icon && (
@@ -27,7 +30,7 @@ const HelperTextComponent = ({
           helperMetadata?.variant && `text-${helperMetadata?.variant}`,
         )}
       >
-        {helperText}
+        {t(helperText)}
       </div>
     </div>
   );

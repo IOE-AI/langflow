@@ -19,6 +19,7 @@ import { ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import { cloneDeep } from "lodash";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function ToolsTable({
   rows,
@@ -35,6 +36,7 @@ export default function ToolsTable({
   handleOnNewValue: handleOnNewValueType;
   isAction: boolean;
 }) {
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedRows, setSelectedRows] = useState<any[] | null>(null);
   const agGrid = useRef<AgGridReact>(null);
@@ -128,7 +130,7 @@ export default function ToolsTable({
   const columnDefs: ColDef[] = [
     {
       field: isAction ? "display_name" : "name",
-      headerName: isAction ? "Flow Name" : "Name",
+      headerName: isAction ? t('flow_name') : t('name'),
       flex: 1,
       valueGetter: (params) =>
         !isAction
@@ -142,13 +144,13 @@ export default function ToolsTable({
     },
     {
       field: "description",
-      headerName: "Description",
+      headerName: t('description'),
       flex: 2,
       cellClass: "text-muted-foreground",
     },
     {
       field: "name",
-      headerName: isAction ? "Action" : "Slug",
+      headerName: isAction ? t('action') : t('slug'),
       flex: 1,
       resizable: false,
       valueGetter: (params) =>
@@ -172,7 +174,7 @@ export default function ToolsTable({
     },
     {
       field: "tags",
-      headerName: "Tags",
+      headerName: t('tags'),
       flex: 1,
       hide: true,
     },
@@ -251,7 +253,7 @@ export default function ToolsTable({
         <div className="flex-none px-4">
           <Input
             icon="Search"
-            placeholder="Search actions..."
+            placeholder={t('search_actions')}
             inputClassName="h-8"
             value={searchQuery}
             onChange={handleSearchChange}
@@ -288,7 +290,7 @@ export default function ToolsTable({
                     className="text-mmd font-medium"
                     htmlFor="sidebar-name-input"
                   >
-                    Name
+                    {t('name')}
                   </label>
 
                   <Input
@@ -296,13 +298,13 @@ export default function ToolsTable({
                     value={sidebarName}
                     onChange={handleNameChange}
                     maxLength={46}
-                    placeholder="Edit name..."
+                    placeholder={t('edit_name')}
                     data-testid="input_update_name"
                   />
                   <div className="text-xs text-muted-foreground">
                     {isAction
-                      ? "Used as the function name when this flow is exposed to clients."
-                      : "Used as the function name when this tool is exposed to the agent."}
+                      ? t('used_as_function_name_flow')
+                      : t('used_as_function_name_tool')}
                   </div>
                 </div>
                 <div className="flex flex-col gap-2">
@@ -310,21 +312,21 @@ export default function ToolsTable({
                     className="text-mmd font-medium"
                     htmlFor="sidebar-desc-input"
                   >
-                    Description
+                    {t('description')}
                   </label>
 
                   <Textarea
                     id="sidebar-desc-input"
                     value={sidebarDescription}
                     onChange={handleDescriptionChange}
-                    placeholder="Edit description..."
+                    placeholder={t('edit_description')}
                     className="h-24"
                     data-testid="input_update_description"
                   />
                   <div className="text-xs text-muted-foreground">
                     {isAction
-                      ? "This is the description for the action exposed to the clients."
-                      : "This is the description for the tool exposed to the agents."}
+                      ? t('description_for_action')
+                      : t('description_for_tool')}
                   </div>
                 </div>
               </div>
@@ -355,10 +357,10 @@ export default function ToolsTable({
                     {actionArgs.length > 0 && (
                       <div className="flex flex-col gap-1.5">
                         <h3 className="mt-2 text-base font-medium">
-                          Parameters
+                          {t('parameters')}
                         </h3>
                         <p className="text-mmd text-muted-foreground">
-                          Manage inputs for this action
+                          {t('manage_inputs_for_action')}
                         </p>
                       </div>
                     )}
@@ -381,7 +383,7 @@ export default function ToolsTable({
                         <Input
                           id="sidebar-desc-input"
                           disabled
-                          placeholder="Input controlled by the agent"
+                          placeholder={t('input_controlled_by_agent')}
                           onChange={(e) => {}}
                         />
                       </div>

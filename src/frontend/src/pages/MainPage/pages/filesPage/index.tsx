@@ -22,8 +22,10 @@ import { AgGridReact } from "ag-grid-react";
 import { useMemo, useRef, useState } from "react";
 import { sortByDate } from "../../utils/sort-flows";
 import DragWrapComponent from "./components/dragWrapComponent";
+import { useTranslation } from 'react-i18next';
 
 export const FilesPage = () => {
+  const { t } = useTranslation();
   const tableRef = useRef<AgGridReact<any>>(null);
   const { data: files } = useGetFilesV2();
   const setErrorData = useAlertStore((state) => state.setErrorData);
@@ -55,12 +57,12 @@ export const FilesPage = () => {
         files: files,
       });
       setSuccessData({
-        title: `File${filesIds.length > 1 ? "s" : ""} uploaded successfully`,
+        title: filesIds.length > 1 ? t('files_uploaded_success') : t('file_uploaded_success'),
       });
     } catch (error: any) {
       setErrorData({
-        title: "Error uploading file",
-        list: [error.message || "An error occurred while uploading the file"],
+        title: t('error_uploading_file'),
+        list: [error.message || t('error_uploading_file_desc')],
       });
     }
   };
@@ -69,7 +71,7 @@ export const FilesPage = () => {
 
   const colDefs: ColDef[] = [
     {
-      headerName: "Name",
+      headerName: t('name'),
       field: "name",
       flex: 2,
       editable: true,
@@ -108,7 +110,7 @@ export const FilesPage = () => {
             {params.data.progress !== undefined &&
             params.data.progress === -1 ? (
               <span className="text-xs text-primary">
-                Upload failed,{" "}
+                {t('upload_failed')}{" "}
                 <span
                   className="cursor-pointer text-accent-pink-foreground underline"
                   onClick={(e) => {
@@ -118,7 +120,7 @@ export const FilesPage = () => {
                     }
                   }}
                 >
-                  try again?
+                  {t('try_again')}
                 </span>
               </span>
             ) : (
@@ -129,7 +131,7 @@ export const FilesPage = () => {
       }, //This column will be twice as wide as the others
     }, //This column will be twice as wide as the others
     {
-      headerName: "Type",
+      headerName: t('type'),
       field: "path",
       flex: 1,
       filter: "agTextColumnFilter",
@@ -140,7 +142,7 @@ export const FilesPage = () => {
       cellClass: "text-muted-foreground cursor-text select-text",
     },
     {
-      headerName: "Size",
+      headerName: t('size'),
       field: "size",
       flex: 1,
       valueFormatter: (params) => {
@@ -150,7 +152,7 @@ export const FilesPage = () => {
       cellClass: "text-muted-foreground cursor-text select-text",
     },
     {
-      headerName: "Modified",
+      headerName: t('modified'),
       field: "updated_at",
       valueFormatter: (params) => {
         return params.data.progress
@@ -197,7 +199,7 @@ export const FilesPage = () => {
 
   const UploadButtonComponent = useMemo(() => {
     return (
-      <ShadTooltip content="Upload File" side="bottom">
+      <ShadTooltip content={t('upload_file')} side="bottom">
         <Button
           className="!px-3 md:!px-4 md:!pl-3.5"
           onClick={async () => {
@@ -217,7 +219,7 @@ export const FilesPage = () => {
         </Button>
       </ShadTooltip>
     );
-  }, [uploadFile]);
+  }, [t]);
 
   const [quickFilterText, setQuickFilterText] = useState("");
   return (
@@ -243,7 +245,7 @@ export const FilesPage = () => {
                   </SidebarTrigger>
                 </div>
               </div>
-              My Files
+              {t('my_files')}
             </div>
             {files && files.length !== 0 ? (
               <div className="flex justify-between">
@@ -252,7 +254,7 @@ export const FilesPage = () => {
                     icon="Search"
                     data-testid="search-store-input"
                     type="text"
-                    placeholder={`Search files...`}
+                    placeholder={t('search_files')}
                     className="mr-2 w-full"
                     value={quickFilterText || ""}
                     onChange={(event) => {
@@ -313,13 +315,13 @@ export const FilesPage = () => {
               ) : (
                 <CardsWrapComponent
                   onFileDrop={onFileDrop}
-                  dragMessage="Drop files to upload"
+                  dragMessage={t('drop_files_to_upload')}
                 >
                   <div className="flex h-full w-full flex-col items-center justify-center gap-8 pb-8">
                     <div className="flex flex-col items-center gap-2">
-                      <h3 className="text-2xl font-semibold">No files</h3>
+                      <h3 className="text-2xl font-semibold">{t('no_files')}</h3>
                       <p className="text-lg text-secondary-foreground">
-                        Upload files or import from your preferred cloud.
+                        {t('upload_files_or_import')}
                       </p>
                     </div>
                     <div className="flex items-center gap-2">

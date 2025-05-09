@@ -17,6 +17,7 @@ import { cn } from "@/utils/utils";
 import { PopoverAnchor } from "@radix-ui/react-popover";
 import { X } from "lucide-react";
 import { ReactNode, useMemo, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const OptionBadge = ({
   option,
@@ -187,6 +188,9 @@ const CustomInputPopover = ({
   blockAddNewGlobalVariable,
   hasRefreshButton,
 }) => {
+  const { t } = useTranslation();
+  const finalPlaceholder = placeholder ?? t('dropdown.choose_option');
+  const finalOptionsPlaceholder = optionsPlaceholder ?? t('dropdown.search_options');
   const [isFocused, setIsFocused] = useState(false);
   const memoizedOptions = useMemo(() => new Set<string>(options), [options]);
 
@@ -286,11 +290,7 @@ const CustomInputPopover = ({
                 selectedOptions,
                 blockAddNewGlobalVariable,
               )}
-              placeholder={
-                !disabled && (selectedOptions?.length > 0 || selectedOption)
-                  ? ""
-                  : placeholder
-              }
+              placeholder={finalPlaceholder}
               onChange={(e) => onChange?.(e.target.value)}
               onKeyDown={(e) => {
                 handleKeyDown?.(e);
@@ -321,7 +321,7 @@ const CustomInputPopover = ({
             return 0;
           }}
         >
-          <CommandInput placeholder={optionsPlaceholder} />
+          <CommandInput placeholder={finalOptionsPlaceholder} />
           <CommandList>
             <CommandGroup>
               {Array.from(memoizedOptions).map((option, id) => (

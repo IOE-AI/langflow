@@ -7,6 +7,7 @@ import { cn, isTimeStampString } from "@/utils/utils";
 import { CustomCellRendererProps } from "ag-grid-react";
 import { uniqueId } from "lodash";
 import ToggleShadComponent from "../../../toggleShadComponent";
+import { useTranslation } from "react-i18next";
 
 interface CustomCellRender extends CustomCellRendererProps {
   formatter?: "json" | "text" | "boolean" | "number" | "undefined" | "null";
@@ -19,6 +20,8 @@ export default function TableAutoCellRender({
   formatter,
   api,
 }: CustomCellRender) {
+  const { t } = useTranslation();
+
   function getCellType() {
     let format: string = formatter ? formatter : typeof value;
     //convert text to string to bind to the string reader
@@ -100,7 +103,7 @@ export default function TableAutoCellRender({
             size="sq"
             className="h-[18px]"
           >
-            {String(value).toLowerCase()}
+            {t(String(value).toLowerCase())}
           </Badge>
         );
       default:
